@@ -1,0 +1,62 @@
+from ast import Try
+from tokenize import Double
+from warnings import catch_warnings
+import DoublyLinkList
+from Hash.DoublyLinkList import DoublyLinkedList
+
+class TablaHash:
+    def __init__(self,n):
+        self.N = n
+        self.r = self.NearPrime(n)
+        self.table = DoublyLinkedList()
+        for i in range(n):
+            self.table.add_last(None)
+    
+    def NearPrime(self, n):
+        if n > 2:
+            num = n
+            primo = True
+            while True:
+                for x in range(2,num):
+                    if num%x == 0:
+                        primo = False
+                        break
+                if primo == True:
+                    return num
+                num -= 1
+        else:
+            raise Exception("Out of range")
+
+    # Función hash
+    def Hash_func(self, value, i):
+        try:
+            h2 = self.r - (value % self.r)
+            f = i * h2
+            return (value + f) % self.N
+        except:
+            raise Exception("Hashing Error")
+
+
+    def Insert(self, value): # Metodo para ingresar elementos
+        hash = self.Hash_func(value,0)
+        if self.table.FindKth(hash) is None:
+            self.table[hash] = value
+        else:
+            while True:
+                i = 1
+
+   
+    def Search(self,value): # Metodo para buscar elementos
+        hash = self.Hash_func(value)
+        if self.table[hash] is None:
+            return None
+        else:
+            return hex(id(self.table[hash]))
+  
+    def Remove(self,value): # Metodo para eleminar elementos
+        hash = self.Hash_func(value)
+        if self.table[hash] is None:
+            print("No hay elementos con ese valor", value)
+        else:
+            print("Elemento con valor", value, "eliminado")
+            self.table[hash] is None
